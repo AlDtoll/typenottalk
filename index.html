@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TypeNotTalk — your reply to voice messages</title>
-<meta name="description" content="Turn text into a 'typing…' GIF and fire it back at voice messages. TypeNotTalk — a Telegram bot. Текст → печатающаяся гифка в ответ на голосовые.">
+<meta name="description" content="Turn text into a 'typing…' GIF and fire it back at voice messages. A Telegram bot.">
 <meta property="og:title" content="TypeNotTalk — your reply to voice messages">
 <meta property="og:description" content="Text → a 'typing…' GIF you can throw back at any voice message. A Telegram bot.">
 <meta property="og:image" content="https://typenottalk.com/og-cover.png">
@@ -18,16 +18,18 @@
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
 .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.langbar{position:absolute;top:16px;right:18px;display:flex;gap:4px;font-size:13px}
+.langbar button{background:none;border:1px solid #333a42;color:var(--muted);border-radius:8px;
+  padding:5px 11px;cursor:pointer;font-weight:600}
+.langbar button.on{background:var(--accent);border-color:var(--accent);color:#fff}
 header{text-align:center;padding:64px 0 36px}
 .logo{font-size:15px;letter-spacing:3px;color:var(--muted);text-transform:uppercase}
 h1{font-size:clamp(30px,6vw,46px);line-height:1.1;margin:14px 0 12px;font-weight:800}
 h1 .accent{color:var(--accent)}
 .sub{font-size:clamp(16px,2.6vw,20px);color:var(--muted);max-width:560px;margin:0 auto}
-.demo{margin:34px auto 8px;max-width:520px;border-radius:18px;overflow:hidden;
+.demo{margin:34px auto 8px;max-width:460px;border-radius:18px;overflow:hidden;
   box-shadow:0 18px 50px rgba(0,0,0,.45);background:#000}
 .demo video{width:100%;display:block}
-.demos{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:18px}
-.demos .demo{flex:1 1 240px;margin:0;max-width:340px}
 .cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;
   text-decoration:none;font-weight:700;font-size:18px;padding:15px 30px;border-radius:14px;
   margin-top:30px;transition:transform .12s,box-shadow .12s;box-shadow:0 8px 24px rgba(62,163,122,.35)}
@@ -46,27 +48,30 @@ h2{font-size:26px;margin-bottom:22px;text-align:center}
 .plan li:before{content:"✓";position:absolute;left:0;color:var(--accent)}
 .faq{max-width:620px;margin:0 auto}
 .qa{margin-bottom:16px}.qa .q{font-weight:600}.qa .a{color:var(--muted);font-size:15px}
-.ru{color:var(--muted);font-size:14px;margin-top:6px}
+.qa .a a{color:var(--accent)}
 footer{text-align:center;color:var(--muted);font-size:13px;padding:40px 0 60px}
 footer a{color:var(--muted)}
+[data-lang]{display:none}
 @media(max-width:560px){.price{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="wrap">
 
+<div class="langbar">
+  <button id="btn-en" onclick="setLang('en')">EN</button>
+  <button id="btn-ru" onclick="setLang('ru')">RU</button>
+</div>
+
+<!-- ───────────────────────── ENGLISH ───────────────────────── -->
+<div data-lang="en">
+<div class="wrap">
   <header>
     <div class="logo">⌨️ TypeNotTalk</div>
     <h1>Your reply to <span class="accent">voice messages</span>.</h1>
     <p class="sub">Send text — get back a “typing…” GIF. Throw it at anyone who leaves you a voicenote.</p>
-    <p class="sub ru">Пиши текст — получай гифку, будто набирается сообщение. Идеальный ответ на голосовые.</p>
-    <div class="demos">
-      <div class="demo"><video src="demo.mp4" autoplay loop muted playsinline></video></div>
-      <div class="demo"><video src="demo_ru.mp4" autoplay loop muted playsinline></video></div>
-    </div>
+    <div class="demo"><video src="demo.mp4" autoplay loop muted playsinline></video></div>
     <a class="cta" href="https://t.me/TypeNotTalkbot">Open in Telegram →</a>
   </header>
-
   <section>
     <h2>How it works</h2>
     <div class="feat">
@@ -76,35 +81,77 @@ footer a{color:var(--muted)}
       <div class="f"><div class="ic">⌨️</div><h3>Works anywhere</h3><p>Inline mode: type <b>@TypeNotTalkbot</b> + text in any chat.</p></div>
     </div>
   </section>
-
   <section>
     <h2>Free &amp; Pro</h2>
     <div class="price">
-      <div class="plan">
-        <div class="name">Free</div>
-        <div class="pr">0 ⭐</div>
-        <ul><li>Unlimited GIFs</li><li>Type-and-delete effect</li><li>Small watermark</li></ul>
-      </div>
-      <div class="plan pro">
-        <div class="name">Pro</div>
-        <div class="pr">150 ⭐</div>
-        <ul><li>No watermark</li><li>Longer text (600 chars)</li><li>Support the project 🙏</li><li>One-time, forever</li></ul>
-      </div>
+      <div class="plan"><div class="name">Free</div><div class="pr">0 ⭐</div>
+        <ul><li>Unlimited GIFs</li><li>Type-and-delete effect</li><li>Small watermark</li></ul></div>
+      <div class="plan pro"><div class="name">Pro</div><div class="pr">150 ⭐</div>
+        <ul><li>No watermark</li><li>Longer text (600 chars)</li><li>Support the project 🙏</li><li>One-time, forever</li></ul></div>
     </div>
   </section>
-
   <section class="faq">
     <h2>FAQ</h2>
-    <div class="qa"><div class="q">Is it free?</div><div class="a">Yes. Pro (150 Telegram Stars, one-time) just removes the watermark and unlocks longer text.</div></div>
-    <div class="qa"><div class="q">Как пользоваться?</div><div class="a">Открой <a href="https://t.me/TypeNotTalkbot" style="color:var(--accent)">@TypeNotTalkbot</a>, нажми Start, напиши любой текст — получишь гифку. Зачеркни кусок текста — на гифке он напечатается и сотрётся.</div></div>
-    <div class="qa"><div class="q">Does it record my messages?</div><div class="a">No. Text goes in, a GIF comes out. Nothing is stored except your Pro status.</div></div>
+    <div class="qa"><div class="q">Is it free?</div><div class="a">Yes. Pro (150 Telegram Stars, one-time) removes the watermark and unlocks longer text.</div></div>
+    <div class="qa"><div class="q">How do I use it?</div><div class="a">Open <a href="https://t.me/TypeNotTalkbot">@TypeNotTalkbot</a>, hit Start, type any text — get a GIF. Strike a part of the text and it types, then deletes on the GIF.</div></div>
+    <div class="qa"><div class="q">Does it record my messages?</div><div class="a">No. Text in, GIF out. Nothing stored except your Pro status.</div></div>
   </section>
-
-  <footer>
-    Made with ⌨️ not 🎙️ &nbsp;·&nbsp; <a href="https://t.me/TypeNotTalkbot">@TypeNotTalkbot</a><br>
-    typenottalk.com
-  </footer>
-
+  <footer>Made with ⌨️ not 🎙️ &nbsp;·&nbsp; <a href="https://t.me/TypeNotTalkbot">@TypeNotTalkbot</a><br>typenottalk.com</footer>
 </div>
+</div>
+
+<!-- ───────────────────────── РУССКИЙ ───────────────────────── -->
+<div data-lang="ru">
+<div class="wrap">
+  <header>
+    <div class="logo">⌨️ TypeNotTalk</div>
+    <h1>Твой ответ на <span class="accent">голосовые</span>.</h1>
+    <p class="sub">Пиши текст — получай гифку, будто набирается сообщение. Кидай её в ответ на любое голосовое.</p>
+    <div class="demo"><video src="demo_ru.mp4" autoplay loop muted playsinline></video></div>
+    <a class="cta" href="https://t.me/TypeNotTalkbot">Открыть в Telegram →</a>
+  </header>
+  <section>
+    <h2>Как это работает</h2>
+    <div class="feat">
+      <div class="f"><div class="ic">✍️</div><h3>Напиши что угодно</h3><p>Отправь боту любой текст — он сделает реалистичную анимацию набора.</p></div>
+      <div class="f"><div class="ic">📤</div><h3>Кинь в ответ</h3><p>Ответь гифкой на голосовое. Без звука и без извинений.</p></div>
+      <div class="f"><div class="ic">🫥</div><h3>Печать и удаление</h3><p>Зачеркни кусок текста — на гифке он напечатается и сотрётся. Дерзко.</p></div>
+      <div class="f"><div class="ic">⌨️</div><h3>Работает везде</h3><p>Inline-режим: набери <b>@TypeNotTalkbot</b> и текст в любом чате.</p></div>
+    </div>
+  </section>
+  <section>
+    <h2>Free и Pro</h2>
+    <div class="price">
+      <div class="plan"><div class="name">Free</div><div class="pr">0 ⭐</div>
+        <ul><li>Безлимит гифок</li><li>Эффект печать-и-удаление</li><li>Маленький вотермарк</li></ul></div>
+      <div class="plan pro"><div class="name">Pro</div><div class="pr">150 ⭐</div>
+        <ul><li>Без вотермарка</li><li>Длинный текст (600 симв.)</li><li>Поддержка проекта 🙏</li><li>Разово, навсегда</li></ul></div>
+    </div>
+  </section>
+  <section class="faq">
+    <h2>Вопросы</h2>
+    <div class="qa"><div class="q">Это бесплатно?</div><div class="a">Да. Pro (150 Telegram Stars, разово) убирает вотермарк и снимает лимит длины.</div></div>
+    <div class="qa"><div class="q">Как пользоваться?</div><div class="a">Открой <a href="https://t.me/TypeNotTalkbot">@TypeNotTalkbot</a>, нажми Start, напиши текст — получишь гифку. Зачеркни кусок — на гифке он напечатается и сотрётся.</div></div>
+    <div class="qa"><div class="q">Бот записывает мои сообщения?</div><div class="a">Нет. Текст на входе, гифка на выходе. Ничего не хранится, кроме твоего Pro-статуса.</div></div>
+  </section>
+  <footer>Сделано ⌨️, а не 🎙️ &nbsp;·&nbsp; <a href="https://t.me/TypeNotTalkbot">@TypeNotTalkbot</a><br>typenottalk.com</footer>
+</div>
+</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-lang]').forEach(e=>e.style.display=(e.getAttribute('data-lang')===l)?'block':'none');
+  document.documentElement.lang=l;
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  document.getElementById('btn-ru').classList.toggle('on',l==='ru');
+  try{localStorage.setItem('tnt_lang',l)}catch(e){}
+}
+(function(){
+  var saved=null; try{saved=localStorage.getItem('tnt_lang')}catch(e){}
+  var nav=(navigator.language||navigator.userLanguage||'').toLowerCase();
+  var l=saved || (nav.indexOf('ru')===0 ? 'ru' : 'en');
+  setLang(l);
+})();
+</script>
 </body>
 </html>
